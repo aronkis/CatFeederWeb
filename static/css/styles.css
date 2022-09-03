@@ -1,0 +1,172 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #ffffff;
+    font-family: sans-serif;
+}
+
+.form-wrap {
+    width: 320px;
+    background: #3e3d3d;
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+h3 {
+    text-size-adjust: 16pt;
+    text-align: center;
+    color: #fff;
+    font-weight: normal;
+    margin-bottom: 20px;
+}
+
+textarea {
+    background: #b4b4b8;
+    border: none;
+    color: black !important;
+    width: 641px;
+}
+
+input {
+    width: 55%;
+    background: #fff;
+    border: 1px solid #000;
+    border-radius: 3px;
+    padding: 6px 15px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: #000;
+}
+
+input[type="button"] {
+    background: #bac675;
+    border: 0;
+    cursor: pointer;
+    color: #3e3d3d;
+    margin-top: 5px;
+}
+
+input[type="button"]:hover {
+    background: #a4b15c;
+    transition: .6s;
+}
+
+::placeholder {
+    color: #fff;
+}
+
+.divClass {
+    width: 100%;
+    height: 30px;
+    text-align: left;
+    background: none;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    box-sizing: border-box;
+    padding: 6px 15px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #fff;
+}
+
+label {
+    color: honeydew;
+}
+
+.black{
+    color:black;
+}
+
+.flex-box {
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: 10%;
+    margin-top: 5%;
+}
+
+.flex-box-2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+}
+
+.flex-box-text{
+    color: rgb(0, 0, 0);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 5%;
+    width: 100%;
+}
+
+.inner-flex-box{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin:auto;
+    text-align: center;
+    width: 100%;
+}
+
+.flex-img{
+    width: 300px;
+    height: 200px;
+    margin:auto;
+    align-content: center;
+}
+
+.picDiv {
+    margin-left: 5%;
+}
+
+.math-box {
+    font-size: 20px;
+    color: black;
+    display: inline-block;
+    margin-top: 15px;
+    margin-left: 5%;
+}
+
+.math-box .vstack {
+    display: inline-block;
+    position: relative;
+}
+
+.math-box .vstack>div {
+    position: relative;
+    text-align: center;
+    height: 0;
+}
+
+.math-box .baseline-fix {
+    display: inline-table;
+    table-layout: fixed;
+}
+
+.math-box .frac-line {
+    width: 100%;
+    display: inline-block;
+}
+
+.math-box .frac-line:before {
+    display: block;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    content: "";
+}
+
+.math-box .frac-line:after {
+    display: block;
+    margin-top: -1px;
+    border-bottom-style: solid;
+    border-bottom-width: 0.04em;
+    content: "";
+}
