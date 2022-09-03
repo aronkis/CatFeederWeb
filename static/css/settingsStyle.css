@@ -1,0 +1,49 @@
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body .infoContainer {
+  height: 60vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-grow: 1;
+}
+body .infoContainer fieldset:first-of-type {
+  background-image: linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255, 0.5)), url("/static/images/clockncal.png");
+  background-position: 100px;
+  background-repeat: no-repeat;
+}
+body .infoContainer fieldset:nth-of-type(2) {
+  background-image: linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255, 0.5)), url("/static/images/catBowl.png");
+  background-position: 100px;
+  background-repeat: no-repeat;
+}
+body .infoContainer fieldset {
+  padding: 0.5em;
+  border: 2.5px solid black;
+  border-radius: 10px;
+  width: 25%;
+}
+body .infoContainer fieldset legend {
+  width: auto;
+}
+body .infoContainer fieldset div {
+  width: 100%;
+}
+body .buttons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 20vh;
+}
+body .buttons input {
+  background-image: linear-gradient(to right, #900603 0%, white 15%, white 85%, #900603 100%);
+  width: 180px;
+  height: 75px;
+  font-size: large;
+  border-radius: 25px;
+}/*# sourceMappingURL=settingsStyle.css.map */
