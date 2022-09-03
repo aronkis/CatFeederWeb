@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename= 'css/settingsStyle.css') }}">
+{% endblock %}
+
+{% block title %}
+Info
+{% endblock %}
+
+{% block content %}
+<div class="infoContainer">
+    <fieldset class="datentime">
+        <legend>Date & time</legend>
+        <div id="a">
+            <script type="text/javascript">
+                var time = new Date().toLocaleTimeString('en-GB',{timeZone:"{{zone}}"});
+                function digitalClock() {
+                    time = new Date().toLocaleTimeString('en-GB',{timeZone:"{{zone}}"});
+                    
+                    document.getElementById("a").innerHTML = "Current time: " + time;
+                    
+                    
+                    setTimeout(digitalClock, 1000);
+                }
+                //jsonTIME = time.toJSON();
+                digitalClock();
+            </script>
+        </div>
+        <p>Current date: <a>{{date}}</a></p>
+    </fieldset>
+    <br><br>
+    <fieldset class="foodntreat">
+        <legend>Food & treat</legend>
+        <p>Food amount: <a>{{feedAmount}}</a>g</p>
+        <p>Treat amount: <a>{{treatAmount}}</a>g</p>
+        <form method="POST" action="/info">
+            <a>Feeding time: </a>
+            {% if number is not none %}
+            {% for i in range(numberOfFeedings) %}
+            <input type="time" name="{{'feedTime' + i|string}}" value="{{times[i]}}" disabled="True">
+            <br>
+            {% endfor %}
+            {% endif %}
+        </form>
+    </fieldset>
+</div>
+<div class="buttons">
+    <form method="POST" action="/treatLeft">
+        <input type="submit" name="TreatLeft" value="Treat Left">
+    </form>
+    <form method="POST" action="/treatRight">
+        <input type="submit" name="TreatRight" value="Treat Right">
+    </form>
+</div>
+{% endblock %}
+
+
+<!-- <p>Current time: <a>{{time}}</a></p> -->
