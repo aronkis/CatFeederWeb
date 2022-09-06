@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename= 'css/styles.css') }}">
+<script type="text/javascript" src="{{ url_for('static', filename= 'js/scripts.js') }}"></script>
+{% endblock %}
+
+{% block title %}
+Settings
+{% endblock %}
+
+{% block content %}
+
+<div class="flex-box-text">
+    <div class="inner-flex-box">
+        <div class="black">
+            Feed amount
+        </div>
+        <div class="black">
+            <form method="POST" action="/setFoodAmount">
+                <input type="number" name="feedAmount" min="1" max="35" value="{{feedAmount}}"
+                    oninput="checkValue(this);">
+                <input type="submit" value="Set Feed Amount">
+            </form>
+        </div>
+    </div>
+
+    <div class="inner-flex-box">
+        <div class="black">
+            Treat amount
+        </div>
+        <div class="black">
+            <form method="POST" action="/setTreatAmount">
+                <input type="number" name="treatAmount" min="1" max="35" value="{{treatAmount}}"
+                    oninput="checkValue(this);">
+                <input type="submit" value="Set Treat Amount">
+            </form>
+        </div>
+    </div>
+
+    <div class="inner-flex-box">
+        <div class="black">
+            Timezone
+        </div>
+        <div class="black">
+            <form name="timezone" id="timezone" method="POST" action="/setTimezone">
+                <div class="black">Region</div>
+                <select name="region" id="region" onchange="fetchData({{timezones}});">
+                    <option value="{{regionS}}" selected disabled hidden>{{regionS}}</option>
+                    {% for region in regions %}
+                    <option value="{{region}}">{{region}}</option>
+                    {% endfor %}
+                </select>
+                <div class="black">City</div>
+                <select name="city" id="city" onchange="postTimezones();">
+                    <option selected="selected">{{cityS}}</option>
+                </select>
+            </form>
+        </div>
+    </div>
+    
+    <div class="inner-flex-box">
+        <div class="black">
+            Feed times and schedule
+        </div>
+        <div class="black">
+            <form method="POST" action="/setnumberOfFeedTimes">
+                <input type="number" name="numberOfFeedTimes" id="numberOfFeedTimes" min="1" max="5"
+                    value="{{numberOfFeedings}}" oninput="checkValue(this);">
+                <input type="submit" value="Choose number of feedings">
+            </form>
+
+            <form name="feedingTimes" id="feedingTimes" method="POST">
+                {% if number is not none %}
+                {% for i in range(numberOfFeedings) %}
+                <input class="feedTime" type="time" name="{{'feedTime' + i|string}}" value="{{times[i]}}">
+                {% endfor %}
+                {% endif %}
+                <input type="submit">
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" src="{{ url_for('static', filename= 'js/times.js') }}"></script>
+</div>
+{% endblock %}
