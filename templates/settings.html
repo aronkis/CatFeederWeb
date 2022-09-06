@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename= 'css/styles.css') }}">
+<script type="text/javascript">
+    function fetchData(cities) {
+        var select = document.getElementById("city");
+        var region = document.getElementById("region").value;
+        removeOptions(select);
+        var elmts = cities[region];
+        for (var i = 0; i < elmts.length; i++) {
+            var optn = elmts[i];
+            var el = document.createElement("option");
+            el.textContent = optn;
+            el.value = optn;
+            select.appendChild(el);
+        }
+    }
+</script>
+
+<script>
+    async function postTimezones() {
+        // document.timezone.submit();
+        const form = document.getElementById('timezone');
+        const region = form.region.value;
+        const city = form.city.value;
+
+        try {
+            const result = await fetch('/setTimezone', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ "region": region, "city": city }),
+            });
+            const data = await result.json();
+            console.log(data)
+            if (result.ok) {
+                location.assign('/settings');
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+</script>
+
+
+<script>
+    function removeOptions(selectElement) {
+        var i, L = selectElement.options.length - 1;
+        for (i = L; i >= 0; i--) {
+            selectElement.remove(i);
+        }
+    }
+</script>
+
+<script>
+    function checkValue(sender) {
+        let min = sender.min;
+        let max = sender.max;
+        let value = parseInt(sender.value);
+        if (value > max) {
+            sender.value = max;
+        } else if (value < min) {
+            sender.value = min;
+        }
+    }
+</script>
+
+{% endblock %}
+
+{% block title %}
+Settings
+{% endblock %}
+
+{% block content %}
+
+<div class="flex-box-text">
+    <div class="inner-flex-box">
+        <div class="black">
+            Feed amount
+        </div>
+        <div class="black">
+            <form method="POST" action="/setFoodAmount">
+                <input type="number" name="feedAmount" min="1" max="35" value="{{feedAmount}}"
+                    oninput="checkValue(this);">
+                <input type="submit" value="Set Feed Amount">
+            </form>
+        </div>
+    </div>
+
+    <div class="inner-flex-box">
+        <div class="black">
+            Treat amount
+        </div>
+        <div class="black">
+            <form method="POST" action="/setTreatAmount">
+                <input type="number" name="treatAmount" min="1" max="35" value="{{treatAmount}}"
+                    oninput="checkValue(this);">
+                <input type="submit" value="Set Treat Amount">
+            </form>
+        </div>
+    </div>
+
+    <div class="inner-flex-box">
+        <div class="black">
+            Timezone
+        </div>
+        <div class="black">
+            <form name="timezone" id="timezone" method="POST" action="/setTimezone">
+                <div class="black">Region</div>
+                <select name="region" id="region" onchange="fetchData({{timezones}});">
+                    <option value="{{regionS}}" selected disabled hidden>{{regionS}}</option>
+                    {% for region in regions %}
+                    <option value="{{region}}">{{region}}</option>
+                    {% endfor %}
+                </select>
+                <div class="black">City</div>
+                <select name="city" id="city" onchange="postTimezones();">
+                    <option selected="selected">{{cityS}}</option>
+                </select>
+            </form>
+        </div>
+    </div>
+    <div class="inner-flex-box">
+        <div class="black">
+            Feed times and schedule
+        </div>
+        <div class="black">
+            <form method="POST" action="/setnumberOfFeedTimes">
+                <input type="number" name="numberOfFeedTimes" id="numberOfFeedTimes" min="1" max="5"
+                    value="{{numberOfFeedings}}" oninput="checkValue(this);">
+                <input type="submit" value="Choose number of feedings">
+            </form>
+
+            <form name="feedingTimes" id="feedingTimes" method="POST">
+                {% if number is not none %}
+                {% for i in range(numberOfFeedings) %}
+                <input class="feedTime" type="time" name="{{'feedTime' + i|string}}" value="{{times[i]}}">
+                {% endfor %}
+                {% endif %}
+                <input type="submit">
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    // async function postFeedingTimes() {
+    const form = document.getElementById('feedingTimes');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const numberOfFeedTimes = document.getElementById('numberOfFeedTimes').value;
+        const feedTimes = document.getElementsByClassName("feedTime");
+        let times = [];
+        for (let i = 0; i < numberOfFeedTimes; i++) {
+            time = feedTimes[i].value;
+            times.push(time);
+        }
+        try {
+            const result = await fetch('/setFeedingHours', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ "times": times })
+            });
+            const data = await result.json();
+            if (result.ok) {
+                location.assign('/settings');
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    });
+    // }
+</script>
+
+{% endblock %}
